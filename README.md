@@ -85,6 +85,9 @@ The final step in the original version is to compute h(x) = Wh * x (Wh of shape 
 # References
 
 [1] https://github.com/fastai/imagenette
+
 [2] https://github.com/fastai/fastai/blob/master/examples/train_imagenette.py
+
 [3] https://github.com/fastai/fastai/blob/5c51f9eabf76853a89a9bc5741804d2ed4407e49/fastai/layers.py
+
 [4] https://arxiv.org/abs/1805.08318
