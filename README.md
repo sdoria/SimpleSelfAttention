@@ -16,7 +16,7 @@ We evaluate our model on the Imagenette/Imagewoof datasets [1]. We compare it to
 |---|---|---|---|---|---|
 | Imagewoof | 256  |  5 |  61.9% (10 runs)| 67.6% (10 runs)  | 1  |
 | Imagewoof | 256 | 20  |  84.6% (1 run) |  85.7% (2 runs) | 1 |
-|  Imagewoof | 256  |  80 | 89%???  | 90.3% (2 runs)  | 1 |
+|  Imagewoof | 256  |  80 | 89.4% (1 run) | 90.3% (2 runs)  | 1 |
 |  Imagewoof | 256  |  400 |  90.2%??? | 91% (1 run)  | 1 |
 |  Imagenette | 256  |  5 |  84.6% (6 runs) | 85.3% (6 runs)  | 1 |
 
