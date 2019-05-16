@@ -10,13 +10,13 @@ The purpose of this repository is two-fold:
 
 We evaluate our model on the Imagenette/Imagewoof datasets [1]. We compare it to a baseline xresnet50 model[2], which is currently the best model on the Imagenette/Imagewoof leaderboards (as of 5/14/2019).
 
-### Preliminary results (5/14/2019):
+### Preliminary results (5/16/2019):
 
 | Dataset | Image Size  |  Epochs | Baseline avg accuracy  | Proposed model avg accuracy | GPUs  |
 |---|---|---|---|---|---|
 | Imagewoof | 256  |  5 |  61.9% (10 runs)| 67.6% (10 runs)  | 1  |
 | Imagewoof | 256 | 20  |  83.9% (10 runs) |  85.66% (10 runs) | 1 |
-|  Imagewoof | 256  |  80 | 89.4% (1 run) | 90.3% (2 runs)  | 1 |
+|  Imagewoof | 256  |  80 | 89.9% (10 runs) | 90.3% (10 runs)  | 1 |
 |  Imagewoof | 256  |  400 |  90.2%??? | 91% (1 run)  | 1 |
 |  Imagenette | 256  |  5 |  84.6% (6 runs) | 85.3% (6 runs)  | 1 |
 
