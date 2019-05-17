@@ -19,6 +19,7 @@ We evaluate our model on the Imagenette/Imagewoof datasets [1]. We compare it to
 |  Imagewoof | 256  |  80 | 89.9% (10 runs) | 90.3% (10 runs)  | 1 |
 |  Imagewoof | 256  |  400 |  90.2%??? | 91% (1 run)  | 1 |
 |  Imagenette | 256  |  5 |  84.6% (6 runs) | 85.3% (6 runs)  | 1 |
+|  Imagenette | 256  |  5 |  93.6% (6 runs) | 94.4% (6 runs)  | 1 |
 
 There needs to be more runs on both baseline and proposed models for 20 and more epochs. Also, I have some doubts on the baseline accuracy originally reported ([1]), as our baseline results on 5 and 10 epochs are higher than the original ones.
 
