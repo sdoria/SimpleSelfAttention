@@ -3,7 +3,7 @@ Python 3.7, Pytorch 1.0.0, fastai 1.0.52
 
 
 The purpose of this repository is two-fold:
-- demonstrate improvements brought by the use of a self-attention layer in an image classification layer
+- demonstrate improvements brought by the use of a self-attention layer in an image classification model.
 - introduce a new layer which I call SimpleSelfAttention
 
 ## Image classification results
