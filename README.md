@@ -32,6 +32,13 @@ The only difference between baseline and proposed model is the addition of a sel
 
 The new layer, which I call SimpleSelfAttention, is based on the fastai implementation ([3]) of the self attention layer described in the SAGAN paper ([4]).
 
+Edit (5/28/2019): We show in this preliminary test that SimpleSelfAttention can do at least as well as SelfAttention:
+
+| Dataset | Image Size  |  Epochs | XResnet50 avg accuracy  | XResnet50 + SelfAttention | XResnet50 + SimpleSelfAttention  | # of runs |
+|---|---|---|---|---|---|---|
+| ImageWoof | 128 px | 5 epochs | 62.3% | 64.0% | 65.2% | 12 runs |
+
+
 #### Original layer:
 
           
