@@ -8,7 +8,7 @@ The purpose of this repository is two-fold:
 
 ## Image classification results
 
-We evaluate our model on the Imagenette/Imagewoof datasets [1]. We compare it to a baseline xresnet50 model[2], which is currently the best model on the Imagenette/Imagewoof leaderboards (as of 5/14/2019).
+We evaluate our model on the Imagenette/Imagewoof datasets [1]. We compare it to a baseline xresnet50 model[2], which is currently the best model on the Imagenette/Imagewoof leaderboards (as of 5/14/2019). We use the same hyperparameters for both baseline and proposed model.
 
 ### Preliminary results (updated 5/21/2019):
 
