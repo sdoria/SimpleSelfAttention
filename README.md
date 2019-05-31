@@ -1,4 +1,4 @@
-# SimpleSelfAttention (5/14/2019)
+# SimpleSelfAttention (Created 5/14/2019)
 Python 3.7, Pytorch 1.0.0, fastai 1.0.52
 
 
@@ -6,11 +6,43 @@ The purpose of this repository is two-fold:
 - demonstrate improvements brought by the use of a self-attention layer in an image classification model.
 - introduce a new layer which I call SimpleSelfAttention
 
+## Updates
+
+v0.2 (5/31/2019)
+- Original standalone notebook is now in folder "v0.1"
+- model is now in xresnet.py, training is done via train.py (both adapted from fastai repository)
+- Added option for symmetrical self-attention (thanks @mgrankin for the implementation)
+- Added support for multiple GPU (thanks to fastai)
+- Added option to run fastai's learning rate finder
+- Added option to use xresnet18 to xresnet152 baseline architectures
+
+Note: we recommend starting with a single GPU, as running multiple GPU will require additional hyperparameter tuning.
+
+### Example (see 'examples' notebook):
+
+%run train.py --woof 1 --size 256 --bs 64 --mixup 0.2 --sa 1 --epoch 5  --lr 3e-3
+
+woof: 0 for Imagenette, 1 for Imagewoof (dataset will download automatically)
+size: image size
+bs: batch size
+mixup: 0 for no mixup data augmentation
+sa: 1 if we use SimpleSelfAttention, otherwise 0
+sym: 1 if we add symmetry to SimpleSelfAttention (need to have sa=1)
+epoch: number of epochs
+lr: learning rate
+lrfinder: 1 to run learning rate finder, don't train
+dump: 1 to print model, don't train
+arch: default is 'xresnet50'
+
+
+
+
+
 ## Image classification results
 
 We evaluate our model on the Imagenette/Imagewoof datasets [1]. We compare it to a baseline xresnet50 model[2], which is currently the best model on the Imagenette/Imagewoof leaderboards (as of 5/14/2019). We use the same hyperparameters for both baseline and proposed model.
 
-### Preliminary results (updated 5/21/2019):
+### Preliminary results (from v0.1, updated 5/21/2019):
 
 | Dataset | Image Size  |  Epochs | Baseline avg accuracy  | Proposed model avg accuracy | GPUs  |
 |---|---|---|---|---|---|
