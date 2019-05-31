@@ -22,30 +22,21 @@ Note: we recommend starting with a single GPU, as running multiple GPU will requ
 
 %run train.py --woof 1 --size 256 --bs 64 --mixup 0.2 --sa 1 --epoch 5  --lr 3e-3
 
---woof: 0 for Imagenette, 1 for Imagewoof (dataset will download automatically)
-
---size: image size
-
---bs: batch size
-
---mixup: 0 for no mixup data augmentation
-
---sa: 1 if we use SimpleSelfAttention, otherwise 0
-
---sym: 1 if we add symmetry to SimpleSelfAttention (need to have sa=1)
-
---epoch: number of epochs
-
---lr: learning rate
-
---lrfinder: 1 to run learning rate finder, don't train
-
---dump: 1 to print model, don't train
-
---arch: default is 'xresnet50'
+- woof: 0 for Imagenette, 1 for Imagewoof (dataset will download automatically)
+- size: image size
+- bs: batch size
+- mixup: 0 for no mixup data augmentation
+- sa: 1 if we use SimpleSelfAttention, otherwise 0
+- sym: 1 if we add symmetry to SimpleSelfAttention (need to have sa=1)
+- epoch: number of epochs
+- lr: learning rate
+- lrfinder: 1 to run learning rate finder, don't train
+- dump: 1 to print model, don't train
+- arch: default is 'xresnet50'
+- gpu: gpu to train on (by default uses all available GPUs??)
 
 
-
+For faster training on multiple GPUs, you can try running: python -m fastai.launch train.py
 
 
 ## Image classification results
