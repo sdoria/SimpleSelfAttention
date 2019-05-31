@@ -45,7 +45,7 @@ def main(
         bs: Param("Batch size", int)=256,
         mixup: Param("Mixup", float)=0.,
         opt: Param("Optimizer (adam,rms,sgd)", str)='adam',
-        arch: Param("Architecture (xresnet34, xresnet50, presnet34, presnet50)", str)='xresnet50',
+        arch: Param("Architecture (xresnet34, xresnet50)", str)='xresnet50',
         sa: Param("Self-attention", int)=0,
         sym: Param("Symmetry for self-attention", int)=0,
         dump: Param("Print model; don't train", int)=0,
