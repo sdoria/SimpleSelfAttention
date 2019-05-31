@@ -18,7 +18,7 @@ v0.2 (5/31/2019)
 
 Note: we recommend starting with a single GPU, as running multiple GPU will require additional hyperparameter tuning.
 
-### Example (see 'examples' notebook):
+##### How to run (see 'examples' notebook):
 
 %run train.py --woof 1 --size 256 --bs 64 --mixup 0.2 --sa 1 --epoch 5  --lr 3e-3
 
