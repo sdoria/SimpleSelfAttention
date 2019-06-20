@@ -13,6 +13,7 @@ from torchvision.models import *
 #from fastai.vision.models.xresnet2 import *
 #from fastai.vision.models.presnet import *
 from xresnet import *
+from functools import partial
 
 torch.backends.cudnn.benchmark = True
 fastprogress.MAX_COLS = 80
@@ -50,6 +51,7 @@ def main(
         sym: Param("Symmetry for self-attention", int)=0,
         dump: Param("Print model; don't train", int)=0,
         lrfinder: Param("Run learning rate finder; don't train", int)=0,
+        log: Param("Log file name", str)='log',
         ):
     "Distributed training of Imagenette."
     
@@ -67,11 +69,18 @@ def main(
     lr *= bs_rat
 
     m = globals()[arch]
+    
+    log_cb = partial(CSVLogger,filename=log)
+    
     learn = (Learner(data, m(c_out=10, sa=sa, sym=sym), wd=1e-2, opt_func=opt_func,
              metrics=[accuracy,top_k_accuracy],
              bn_wd=False, true_wd=True,
-             loss_func = LabelSmoothingCrossEntropy())
+             loss_func = LabelSmoothingCrossEntropy(),
+             callback_fns=[log_cb])
             )
+    print(learn.path)
+    
+    
     if dump: print(learn.model); exit()
     if mixup: learn = learn.mixup(alpha=mixup)
     learn = learn.to_fp16(dynamic=True)
