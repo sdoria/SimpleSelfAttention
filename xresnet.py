@@ -53,10 +53,18 @@ class SimpleSelfAttention(nn.Module):
             c = (c + c.t())/2
             self.conv.weight = c.view(self.n_in,self.n_in,1)
                 
-        size = x.size()
-        x = x.view(*size[:2],-1)
-        o = torch.bmm(x.permute(0,2,1).contiguous(),self.conv(x))       
-        o = self.gamma * torch.bmm(x,o) + x
+        size = x.size()  
+        x = x.view(*size[:2],-1)   # (C,N)
+        
+        # changed the order of mutiplication to avoid O(N^2) complexity
+        # (x*xT)*(W*x) instead of (x*(xT*(W*x)))
+        
+        convx = self.conv(x)   # (C,C) * (C,N) = (C,N)   => O(NC^2)
+        xxT = torch.bmm(x,x.permute(0,2,1).contiguous())   # (C,N) * (N,C) = (C,C)   => O(NC^2)
+        
+        o = torch.bmm(xxT, convx)   # (C,C) * (C,N) = (C,N)   => O(NC^2)
+          
+        o = self.gamma * o + x
         
           
         return o.view(*size).contiguous()        
