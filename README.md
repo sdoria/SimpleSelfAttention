@@ -41,29 +41,15 @@ Note: we recommend starting with a single GPU, as running multiple GPU will requ
 - dump: 1 to print model, don't train
 - arch: default is 'xresnet50'
 - gpu: gpu to train on (by default uses all available GPUs??)
+- log: name of csv file to save training log to (folder path is displayed when running)
 
 
-For faster training on multiple GPUs, you can try running: python -m fastai.launch train.py
+For faster training on multiple GPUs, you can try running: python -m fastai.launch train.py (not tested much)
 
 
 ## Image classification results
 
-We evaluate our model on the Imagenette/Imagewoof datasets [1]. We compare it to a baseline xresnet50 model[2], which is currently the best model on the Imagenette/Imagewoof leaderboards (as of 5/14/2019). We use the same hyperparameters for both baseline and proposed model.
-
-### Preliminary results (from v0.1, updated 5/21/2019):
-
-| Dataset | Image Size  |  Epochs | Baseline avg accuracy  | Proposed model avg accuracy | GPUs  |
-|---|---|---|---|---|---|
-| Imagewoof | 128  |  5 |  62.3% (12 runs)| 65.2% (12 runs)  | 1  |
-| Imagewoof | 256  |  5 |  61.9% (10 runs)| 67.6% (10 runs)  | 1  |
-| Imagewoof | 256 | 20  |  83.9% (10 runs) |  85.66% (10 runs) | 1 |
-|  Imagewoof | 256  |  80 | 89.9% (10 runs) | 90.3% (10 runs)  | 1 |
-|  Imagewoof | 256  |  400 |  90.2%??? | 91% (1 run)  | 1 |
-|  Imagenette | 128  |  5 |  85.5% (10 runs) | 86.3% (10 runs)  | 1 |
-|  Imagenette | 256  |  5 |  84.6% (6 runs) | 85.3% (6 runs)  | 1 |
-|  Imagenette | 256  |  20 |  93.6% (6 runs) | 94.4% (6 runs)  | 1 |
-
-There needs to be more runs on both baseline and proposed models for 20 and more epochs. Also, I have some doubts on the baseline accuracy originally reported ([1]), as our baseline results are generally higher than the original ones.
+(New results coming soon...)
 
 
 ## Simple Self Attention layer
@@ -104,20 +90,31 @@ Edit (5/28/2019): We show in this preliminary test that SimpleSelfAttention can 
 
 #### Proposed layer:
       
+   
+        
     class SimpleSelfAttention(nn.Module):
     
     def __init__(self, n_in:int, ks=1):#, n_out:int):
-        super().__init__()            
-        self.conv = conv1d(n_in, n_in, ks, padding=ks//2, bias=False)             
-        self.gamma = nn.Parameter(tensor([0.]))      
-     
+        super().__init__()           
+        self.conv = conv1d(n_in, n_in, ks, padding=ks//2, bias=False)    
+        self.gamma = nn.Parameter(tensor([0.]))       
+        self.sym = sym
+        self.n_in = n_in
+        
     def forward(self,x):               
-        size = x.size()
-        x = x.view(*size[:2],-1)
-        o = torch.bmm(x.permute(0,2,1).contiguous(),self.conv(x))      
-        o = self.gamma * torch.bmm(x,o) + x      
-         
-        return o.view(*size).contiguous()   
+                  
+        size = x.size()  
+        x = x.view(*size[:2],-1)   # (C,N)             
+        
+        convx = self.conv(x)   # (C,C) * (C,N) = (C,N)   => O(NC^2)
+        xxT = torch.bmm(x,x.permute(0,2,1).contiguous())   # (C,N) * (N,C) = (C,C)   => O(NC^2)
+        
+        o = torch.bmm(xxT, convx)   # (C,C) * (C,N) = (C,N)   => O(NC^2)
+          
+        o = self.gamma * o + x
+        
+          
+        return o.view(*size).contiguous()      
 
 
 As described in the SAGAN paper ([4]), the original layer takes the image features x of shape (C,N) (where N = H * W), and transforms them into f(x) = Wf * x and g(x) = Wg * x, where Wf and Wg have shape (C,C'), and C' is chosen to be C/8. Those matrix multiplications can be expressed as (1 * 1) convolution layers. Then, we compute S = (f(x))^T * g(x).
