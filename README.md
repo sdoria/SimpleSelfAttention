@@ -90,7 +90,7 @@ Edit (5/28/2019): We show in this preliminary test that SimpleSelfAttention can 
 
 #### Proposed layer:
       
-   
+   Edit (6/21/2019): order of operations matters to reduce complexity! Changed from x * (x^T * (conv(x))) to (x * x^T) * conv(x)
         
     class SimpleSelfAttention(nn.Module):
     
