@@ -1,4 +1,7 @@
 # SimpleSelfAttention (Created 5/14/2019)
+
+<img src="http://latex2png.com/output//latex_f5276d83dd3ba4c9e825b7be541dfee0.png" />
+
 Python 3.7, Pytorch 1.0.0, fastai 1.0.52
 
 
