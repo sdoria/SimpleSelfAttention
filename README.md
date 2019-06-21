@@ -8,6 +8,10 @@ The purpose of this repository is two-fold:
 
 ## Updates
 
+v0.3 (6/21/2019)
+- Changed the order of operations in SimpleSelfAttention (in xresnet.py), it should run much faster
+- added fast.ai's csv logging in train.py
+
 v0.2 (5/31/2019)
 - Original standalone notebook is now in folder "v0.1"
 - model is now in xresnet.py, training is done via train.py (both adapted from fastai repository)
