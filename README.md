@@ -12,7 +12,7 @@ The purpose of this repository is two-fold:
 ## Updates
 
 v0.3 (6/21/2019)
-- Changed the order of operations in SimpleSelfAttention (in xresnet.py), it should run much faster
+- Changed the order of operations in SimpleSelfAttention (in xresnet.py), it should run much faster (see Self Attention Time Complexity.ipynb)
 - added fast.ai's csv logging in train.py
 
 v0.2 (5/31/2019)
