@@ -87,9 +87,9 @@ This is using a single RTX 2080 Ti GPU. We use the %%time function on Jupyter no
 
 We can compare the results using an independent samples t-test (https://www.medcalc.org/calc/comparison_of_means.php):
 
-Difference: 0.007
-95% confidence interval: 0.0014 to 0.0124
-Significance level: P = 0.0157
+- Difference: 0.007
+- 95% confidence interval: 0.0014 to 0.0124
+- Significance level: P = 0.0157
 
 
 Adding a SimpleSelfAttention layer seems to provide a statistically significant boost in accuracy after training for ~50 epochs, without additional run time, and while using a learning rate optimized for the original model.
