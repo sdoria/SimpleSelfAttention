@@ -70,6 +70,7 @@ Note: we are not using mixup.
 2) We pick a number of epochs for our modified xresnet18+SimpleSelfAttention model that gives the same runtime or less:
 
 | Model | Dataset | Image Size | Epochs | # of runs | Avg Wall Time |
+|---|---|---|---|---|---|
 | xresnet18 | Imagewoof | 128 | 50 | 4 | 9:28 |
 | xresnet18 + ssa | Imagewoof | 128 | 47 | 4 |  9:37 |
 
@@ -80,7 +81,7 @@ This is using a single RTX 2080 Ti GPU. We use the %%time function on Jupyter no
 3) We compare our two models using the learning rate from step 1 and the number of epochs from step 2:
 
 | Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) | Stdev (Max Accuracy) |
-|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|
 | xresnet18 | Imagewoof | 128 | 50 | 8e-3  | 20 | 0.8498 | 0.00782 |
 | xresnet18 + ssa | Imagewoof | 128 | 47 | 8e-3  | 20  | 0.8567 | 0.00937 |
 
