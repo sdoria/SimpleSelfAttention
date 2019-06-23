@@ -53,7 +53,7 @@ We compare a baseline resnet model to the same model with an extra self-attentio
 
 ### Same run time ~50 epochs test (xresnet18, 128px, Imagewoof dataset[1])
 
-1) We first run the original xresnet18 model for 50 epochs with a range of learning rates and pick the best one:
+#### 1) We first run the original xresnet18 model for 50 epochs with a range of learning rates and pick the best one:
 
 | Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) |
 |---|---|---|---|---|---|---|
@@ -67,7 +67,7 @@ We compare a baseline resnet model to the same model with an extra self-attentio
 
 Note: we are not using mixup.
 
-2) We pick a number of epochs for our modified xresnet18+SimpleSelfAttention model that gives the same runtime or less:
+#### 2) We pick a number of epochs for our modified xresnet18+SimpleSelfAttention model that gives the same runtime or less:
 
 | Model | Dataset | Image Size | Epochs | # of runs | Avg Wall Time |
 |---|---|---|---|---|---|
@@ -78,7 +78,7 @@ Note: we are not using mixup.
 This is using a single RTX 2080 Ti GPU. We use the %%time function on Jupyter notebooks.
 
 
-3) We compare our two models using the learning rate from step 1 and the number of epochs from step 2:
+#### 3) We compare our two models using the learning rate from step 1 and the number of epochs from step 2:
 
 | Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) | Stdev (Max Accuracy) |
 |---|---|---|---|---|---|---|---|
