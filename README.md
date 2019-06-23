@@ -47,22 +47,62 @@ Note: we recommend starting with a single GPU, as running multiple GPU will requ
 For faster training on multiple GPUs, you can try running: python -m fastai.launch train.py (not tested much)
 
 
-## Image classification results
+## Image classification results (work in progress)
 
-(New results coming soon...)
+We compare a baseline resnet model to the same model with an extra self-attention layer (SimpleSelfAttention, which I will describe further down).
+
+### Same run time ~50 epochs test (xresnet18, 128px, Imagewoof dataset[1])
+
+1) We first run the original xresnet18 model for 50 epochs with a range of learning rates and pick the best one:
+
+| Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) |
+|---|---|---|---|---|---|---|
+| xresnet18 | Imagewoof | 128 | 50 | 1e-3  | 10 | 0.821 |
+| xresnet18 | Imagewoof | 128 | 50 | 3e-3  | 30  | 0.845 |
+| xresnet18 | Imagewoof | 128 | 50 | 5e-3  | 10  | 0.846 |
+| xresnet18 | Imagewoof | 128 | 50 | **8e-3**  | 20  | **0.850** |
+| xresnet18 | Imagewoof | 128 | 50 | 1e-2 | 20 | 0.846 |
+| xresnet18 | Imagewoof | 128 | 50 | 12e-3  | 20 | 0.844 |
+| xresnet18 | Imagewoof | 128 | 50 | 14e-3 | 20 | 0.847 |
+
+Note: we are not using mixup.
+
+2) We pick a number of epochs for our modified xresnet18+SimpleSelfAttention model that gives the same runtime or less:
+
+| Model | Dataset | Image Size | Epochs | # of runs | Avg Wall Time |
+| xresnet18 | Imagewoof | 128 | 50 | 4 | 9:28 |
+| xresnet18 + ssa | Imagewoof | 128 | 47 | 4 |  9:37 |
+
+
+This is using a single RTX 2080 Ti GPU. We use the %%time function on Jupyter notebooks.
+
+
+3) We compare our two models using the learning rate from step 1 and the number of epochs from step 2:
+
+| Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) | Stdev (Max Accuracy) |
+|---|---|---|---|---|---|---|
+| xresnet18 | Imagewoof | 128 | 50 | 8e-3  | 20 | 0.8498 | 0.00782 |
+| xresnet18 + ssa | Imagewoof | 128 | 47 | 8e-3  | 20  | 0.8567 | 0.00937 |
+
+We can compare the results using an independent samples t-test (https://www.medcalc.org/calc/comparison_of_means.php):
+
+Difference: 0.007
+95% confidence interval: 0.0014 to 0.0124
+Significance level: P = 0.0157
+
+
+Adding a SimpleSelfAttention layer seems to provide a statistically significant boost in accuracy after training for ~50 epochs, without additional run time, and while using a learning rate optimized for the original model.
+
+More work needs to be done!
+
+
 
 
 ## Simple Self Attention layer
 
-The only difference between baseline and proposed model is the addition of a self-attention layer at a specific position in the architecture. Other positions have been tested with worse results (Edit: this hasn't been really tested thoroughly). Also, adding multiple self-attention layers has made results worse. 
+The only difference between baseline and proposed model is the addition of a self-attention layer at a specific position in the architecture. 
 
-The new layer, which I call SimpleSelfAttention, is based on the fastai implementation ([3]) of the self attention layer described in the SAGAN paper ([4]).
-
-Edit (5/28/2019): We show in this preliminary test that SimpleSelfAttention can do at least as well as SelfAttention:
-
-| Dataset | Image Size  |  Epochs | XResnet50 avg accuracy  | XResnet50 + SelfAttention | XResnet50 + SimpleSelfAttention  | # of runs |
-|---|---|---|---|---|---|---|
-| ImageWoof | 128 px | 5 | 62.3% | 64.0% | 65.2% | 12 runs |
+The new layer, which I call SimpleSelfAttention, is a modified and simplified version of the fastai implementation ([3]) of the self attention layer described in the SAGAN paper ([4]).
 
 
 #### Original layer:
