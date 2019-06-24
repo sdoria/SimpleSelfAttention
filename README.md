@@ -71,14 +71,21 @@ Note: we are not using mixup.
 
 | Model | Dataset | Image Size | Epochs | # of runs | Avg Wall Time |
 |---|---|---|---|---|---|
-| xresnet18 | Imagewoof | 128 | 50 | 4 | 9:28 |
-| xresnet18 + ssa | Imagewoof | 128 | 47 | 4 |  9:37 |
+| xresnet18 | Imagewoof | 128 | 50 | 4 | 9:37 |
+| xresnet18 + ssa | Imagewoof | 128 | 47 | 4 |  9:28 |
 
 
 This is using a single RTX 2080 Ti GPU. We use the %%time function on Jupyter notebooks.
 
 
 #### 3) We compare our two models using the learning rate from step 1 and the number of epochs from step 2:
+
+Parameters:
+
+%run train.py --woof 1 --size 128 --bs 64 --mixup 0 --sa 0 --epoch 50  --lr 8e-3 --arch 'xresnet18'
+
+%run train.py --woof 1 --size 128 --bs 64 --mixup 0 --sa 1 --epoch 47  --lr 8e-3 --arch 'xresnet18'
+
 
 | Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) | Stdev (Max Accuracy) |
 |---|---|---|---|---|---|---|---|
@@ -94,7 +101,28 @@ We can compare the results using an independent samples t-test (https://www.medc
 
 Adding a SimpleSelfAttention layer seems to provide a statistically significant boost in accuracy after training for ~50 epochs, without additional run time, and while using a learning rate optimized for the original model.
 
-More work needs to be done!
+### Same run time ~100 epochs test (xresnet18, 128px, Imagewoof dataset[1])
+
+We use the same parameters as for 50 epochs and double the number of epochs:
+
+Training Time:
+
+| Model | Dataset | Image Size | Epochs | # of runs | Avg Wall Time |
+|---|---|---|---|---|---|
+| xresnet18 | Imagewoof | 128 | 100 | 4 | 20:05 |
+| xresnet18 + ssa | Imagewoof | 128 | 94 | 4 |  19:27 |
+
+
+Accuracy:
+
+| Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) | Stdev (Max Accuracy) |
+|---|---|---|---|---|---|---|---|
+| xresnet18 | Imagewoof | 128 | 100 | 8e-3  | 23 | 0.8576 | 0.00817 |
+| xresnet18 + ssa | Imagewoof | 128 | 94 | 8e-3  | 23  | 0.8634 | 0.00740 |
+
+Difference: 0.006
+95% CI	0.0012 to 0.0104
+Significance level	P = 0.0153
 
 
 
