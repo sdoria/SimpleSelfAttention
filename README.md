@@ -120,9 +120,9 @@ Accuracy:
 | xresnet18 | Imagewoof | 128 | 100 | 8e-3  | 23 | 0.8576 | 0.00817 |
 | xresnet18 + ssa | Imagewoof | 128 | 94 | 8e-3  | 23  | 0.8634 | 0.00740 |
 
-Difference: 0.006
-95% CI	0.0012 to 0.0104
-Significance level	P = 0.0153
+- Difference: 0.006
+- 95% CI	0.0012 to 0.0104
+- Significance level	P = 0.0153
 
 
 
