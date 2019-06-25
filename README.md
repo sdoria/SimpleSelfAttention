@@ -111,8 +111,8 @@ We use the same parameters as for 50 epochs and double the number of epochs:
 
 | Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) | Stdev (Max Accuracy) | Avg Wall Time(# of obs) |
 |---|---|---|---|---|---|---|---|---|
-| xresnet18 | Imagewoof | 128 | 100 | 8e-3  | 23 | 0.8576 | 0.00817 | 20:05 |
-| xresnet18 + ssa | Imagewoof | 128 | 94 | 8e-3  | 23  | 0.8634 | 0.00740 | 19:27 |
+| xresnet18 | Imagewoof | 128 | 100 | 8e-3  | 23 | 0.8576 | 0.00817 | 20:05 (4) |
+| xresnet18 + ssa | Imagewoof | 128 | 94 | 8e-3  | 23  | 0.8634 | 0.00740 | 19:27 (4) |
 
 - Difference: 0.006
 - 95% CI	0.0012 to 0.0104
