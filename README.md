@@ -7,7 +7,7 @@ Python 3.7, Pytorch 1.0.0, fastai 1.0.52
 
 The purpose of this repository is two-fold:
 - demonstrate improvements brought by the use of a self-attention layer in an image classification model.
-- introduce a new layer which I call SimpleSelfAttention
+- introduce a new layer which I call SimpleSelfAttention, which is a modified version of the SelfAttention described in [4]
 
 ## Updates
 
@@ -67,18 +67,20 @@ We compare a baseline resnet model to the same model with an extra self-attentio
 
 Note: we are not using mixup.
 
-#### 2) We pick a number of epochs for our modified xresnet18+SimpleSelfAttention model that gives the same runtime or less:
+#### 2) We pick a number of epochs for our xresnet18+SimpleSelfAttention model that gives the same runtime or less as the baseline model and use the learning rate from step 1
 
-| Model | Dataset | Image Size | Epochs | # of runs | Avg Wall Time |
-|---|---|---|---|---|---|
-| xresnet18 | Imagewoof | 128 | 50 | 4 | 9:37 |
-| xresnet18 + ssa | Imagewoof | 128 | 47 | 4 |  9:28 |
+Results using the original self-attention layer are added as a reference.
 
 
-This is using a single RTX 2080 Ti GPU. We use the %%time function on Jupyter notebooks.
 
+| Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) | Stdev (Max Accuracy) | Avg Wall Time (# of obs) |
+|---|---|---|---|---|---|---|---|---|
+| xresnet18 | Imagewoof | 128 | 50 | 8e-3  | 20 | 0.8498 | 0.00782 | 9:37 (4)|
+| xresnet18 + simple sa | Imagewoof | 128 | 47 | 8e-3  | 20  | 0.8567 | 0.00937 | 9:28 (4) |
+| xresnet18 + original sa | Imagewoof | 128 | 47 | 8e-3  | 20  | 0.8547 | 0.00652 | 11:20 (1) |
 
-#### 3) We compare our two models using the learning rate from step 1 and the number of epochs from step 2:
+This is using a single RTX 2080 Ti GPU. We use the %%time function on Jupyter notebooks. 
+
 
 Parameters:
 
@@ -87,10 +89,7 @@ Parameters:
 %run train.py --woof 1 --size 128 --bs 64 --mixup 0 --sa 1 --epoch 47  --lr 8e-3 --arch 'xresnet18'
 
 
-| Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) | Stdev (Max Accuracy) |
-|---|---|---|---|---|---|---|---|
-| xresnet18 | Imagewoof | 128 | 50 | 8e-3  | 20 | 0.8498 | 0.00782 |
-| xresnet18 + ssa | Imagewoof | 128 | 47 | 8e-3  | 20  | 0.8567 | 0.00937 |
+
 
 We can compare the results using an independent samples t-test (https://www.medcalc.org/calc/comparison_of_means.php):
 
@@ -101,24 +100,19 @@ We can compare the results using an independent samples t-test (https://www.medc
 
 Adding a SimpleSelfAttention layer seems to provide a statistically significant boost in accuracy after training for ~50 epochs, without additional run time, and while using a learning rate optimized for the original model.
 
+SimpleSelfAttention provides similar results as the original SelfAttention, while decreasing run time.
+
+
 ### Same run time ~100 epochs test (xresnet18, 128px, Imagewoof dataset[1])
 
 We use the same parameters as for 50 epochs and double the number of epochs:
 
-Training Time:
-
-| Model | Dataset | Image Size | Epochs | # of runs | Avg Wall Time |
-|---|---|---|---|---|---|
-| xresnet18 | Imagewoof | 128 | 100 | 4 | 20:05 |
-| xresnet18 + ssa | Imagewoof | 128 | 94 | 4 |  19:27 |
 
 
-Accuracy:
-
-| Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) | Stdev (Max Accuracy) |
-|---|---|---|---|---|---|---|---|
-| xresnet18 | Imagewoof | 128 | 100 | 8e-3  | 23 | 0.8576 | 0.00817 |
-| xresnet18 + ssa | Imagewoof | 128 | 94 | 8e-3  | 23  | 0.8634 | 0.00740 |
+| Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) | Stdev (Max Accuracy) | Avg Wall Time(# of obs) |
+|---|---|---|---|---|---|---|---|---|
+| xresnet18 | Imagewoof | 128 | 100 | 8e-3  | 23 | 0.8576 | 0.00817 | 20:05 |
+| xresnet18 + ssa | Imagewoof | 128 | 94 | 8e-3  | 23  | 0.8634 | 0.00740 | 19:27 |
 
 - Difference: 0.006
 - 95% CI	0.0012 to 0.0104
