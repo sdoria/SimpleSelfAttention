@@ -127,10 +127,16 @@ We use the same parameters as for 50 epochs and double the number of epochs:
 | xresnet18 + simple sa | Imagewoof | 128 | 94 | 8e-3  | 15  | 0.87106 | 0.00726 | ? |
 | xresnet18 + original sa | Imagewoof | 128 | 94 | 8e-3  | 15  | 0.8697 | 0.00726 | ? |
 
-Again here, SimpleSelfAttention performs as well as the original self-attention layer.
+Again here, SimpleSelfAttention performs as well as the original self-attention layer and beats the baseline model.
 
+### ~50 epochs , 256px images, Mixup = 0.2
 
+| Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) | Stdev (Max Accuracy) | Avg Wall Time(# of obs) |
+|---|---|---|---|---|---|---|---|---|
+| xresnet18 | Imagewoof | 256 | 50 | 8e-3  | 15 | 0.9005 | 0.00595 | _ |
+| xresnet18 + simple sa | Imagewoof | 256 | 47 | 8e-3  | 15  | 0.9002 | 0.00478 | _ |
 
+So far, no detected improvement when using 256px wide images.
 
 
 ## Simple Self Attention layer
