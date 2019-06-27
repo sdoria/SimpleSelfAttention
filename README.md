@@ -76,7 +76,7 @@ Results using the original self-attention layer are added as a reference.
 | Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) | Stdev (Max Accuracy) | Avg Wall Time (# of obs) |
 |---|---|---|---|---|---|---|---|---|
 | xresnet18 | Imagewoof | 128 | 50 | 8e-3  | 20 | 0.8498 | 0.00782 | 9:37 (4)|
-| xresnet18 + simple sa | Imagewoof | 128 | 47 | 8e-3  | 20  | 0.8567 | 0.00937 | 9:28 (4) |
+| xresnet18 + simple sa | Imagewoof | 128 | 47 | 8e-3  | 20  | **0.8567** | 0.00937 | 9:28 (4) |
 | xresnet18 + original sa | Imagewoof | 128 | 47 | 8e-3  | 20  | 0.8547 | 0.00652 | 11:20 (1) |
 
 This is using a single RTX 2080 Ti GPU. We use the %%time function on Jupyter notebooks. 
@@ -112,11 +112,23 @@ We use the same parameters as for 50 epochs and double the number of epochs:
 | Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) | Stdev (Max Accuracy) | Avg Wall Time(# of obs) |
 |---|---|---|---|---|---|---|---|---|
 | xresnet18 | Imagewoof | 128 | 100 | 8e-3  | 23 | 0.8576 | 0.00817 | 20:05 (4) |
-| xresnet18 + simple sa | Imagewoof | 128 | 94 | 8e-3  | 23  | 0.8634 | 0.00740 | 19:27 (4) |
+| xresnet18 + simple sa | Imagewoof | 128 | 94 | 8e-3  | 23  | **0.8634** | 0.00740 | 19:27 (4) |
 
 - Difference: 0.006
 - 95% CI	0.0012 to 0.0104
 - Significance level	P = 0.0153
+
+
+### ~100 epochs test with Mixup=0.2 (xresnet18, 128px, Imagewoof dataset[1])
+
+| Model | Dataset | Image Size | Epochs | Learning Rate | # of runs | Avg (Max Accuracy) | Stdev (Max Accuracy) | Avg Wall Time(# of obs) |
+|---|---|---|---|---|---|---|---|---|
+| xresnet18 | Imagewoof | 128 | 100 | 8e-3  | 15 | 0.8636 | 0.00585 | ? |
+| xresnet18 + simple sa | Imagewoof | 128 | 94 | 8e-3  | 15  | 0.87106 | 0.00726 | ? |
+| xresnet18 + original sa | Imagewoof | 128 | 94 | 8e-3  | 15  | 0.8697 | 0.00726 | ? |
+
+Again here, SimpleSelfAttention performs as well as the original self-attention layer.
+
 
 
 
