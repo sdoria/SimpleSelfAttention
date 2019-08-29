@@ -1,6 +1,6 @@
 # SimpleSelfAttention (Created 5/14/2019)
 
-(x * x^T) * (W * x)
+## (x * x^T) * (W * x)
 
 Python 3.7, Pytorch 1.0.0, fastai 1.0.52
 
