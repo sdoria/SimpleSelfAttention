@@ -198,6 +198,14 @@ The new layer, which I call SimpleSelfAttention, is a modified and simplified ve
         return o.view(*size).contiguous()      
 
 
+
+### An important tip for convergence:
+
+Convergence can be an issue when adding a SimpleSelfAttention layer to an existing architecture. We've observed that, when placed within a Resnet block, the network converges if SimpleSelfAttention is placed right after a convolution layer that uses batch norm, and initializes the batchnorm weights to 0. 
+In our code (xresnet.py), this is done by setting zero_bn=True for the conv_layer that precedes SImpleSelfAttention.
+
+### Some more info (needs to be rewritten) 
+
 As described in the SAGAN paper ([4]), the original layer takes the image features x of shape (C,N) (where N = H * W), and transforms them into f(x) = Wf * x and g(x) = Wg * x, where Wf and Wg have shape (C,C'), and C' is chosen to be C/8. Those matrix multiplications can be expressed as (1 * 1) convolution layers. Then, we compute S = (f(x))^T * g(x).
 
 Therefore, S = (Wf * x)^T * (Wg * x) = x^T * (Wf ^T * Wg) * x. My first proposed simplification is to combine (Wf ^T * Wg) into a single (C * C) matrix W. So S = x^T * W * x.  S = S(x,x) (bilinear form) is of shape (N * N) and will represent the influence of each pixel on other pixels ("the extent to which the model attends to the ith location when synthesizing the jth region" [4]). Note that S(x,x) depends on the input, whereas W does not. (I suspect that having the same bilinear form for every input might be the reason we do better on Imagewoof = 10 dog breeds than Imagenette = 10 very different classes)
